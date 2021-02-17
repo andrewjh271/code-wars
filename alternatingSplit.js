@@ -17,9 +17,9 @@
 // https://www.codewars.com/kata/simple-encryption-number-1-alternating-split
 
 function encrypt(text, n) {
-  if(typeof text !== 'string') return null;
+  if(!text || n < 1) return text;
   let encryptedArray = text.split('');
-  for(let i = 0; i < n; i++) {
+  while(n--) {
     let evens = [], odds = [];
     encryptedArray.forEach((char, index) => {
       (index % 2 === 1) ? odds.push(char) : evens.push(char);
@@ -30,10 +30,10 @@ function encrypt(text, n) {
 }
 
 function decrypt(encryptedText, n) {
-  if(typeof encryptedText !== 'string') return null;
+  if(!encryptedText || n < 1) return encryptedText;
   let decryptedArray = encryptedText.split('');
   const midpoint = decryptedArray.length / 2
-  for(let i = 0; i < n; i++) {
+  while(n--) {
     let odds = decryptedArray.slice(0, midpoint);
     let evens = decryptedArray.slice(midpoint);
     decryptedArray = [];
