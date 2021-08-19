@@ -7,28 +7,26 @@
 // permutations('aabb'); // ['aabb', 'abab', 'abba', 'baab', 'baba', 'bbaa']
 // The order of the permutations doesn't matter.
 
-let string = '';
-const result = [];
+// https://www.codewars.com/kata/5254ca2719453dcc0b00027d
 
-function permutations(userString) {
-  string = userString;
-  doAnagram(string.length);
-  return result;
-}
-
-function rotate() {
-  string = `${string.slice(1)}${string[0]}`
-  return string;
-}
-
-function doAnagram(length) {
-  if (length === 1) return;
-
-  for (let i = 0; i < length; i++) {
-    doAnagram(length - 1);
-    if (length === 2) {
-      result.push(string);
-    }
-    rotate();
+function permutations(userString) { 
+  if (userString.length < 2) return [userString];
+  let string = userString;
+  const result = [];
+  
+  function rotate(start) {
+    string = `${string.slice(0, start)}${string.slice(start + 1)}${string[start]}`;
+    return string;
   }
+  
+  function doAnagram(size) {
+    for (let i = 0; i < size; i++) {
+      doAnagram(size - 1);
+      if (size === 2) result.push(string);
+      rotate(string.length - size);
+    }
+  }
+  
+  doAnagram(string.length);
+  return [...new Set(result)];
 }
